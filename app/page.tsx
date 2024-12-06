@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef, ReactNode } from 'react'
+import { motion, AnimatePresence, MotionValue } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -135,18 +135,21 @@ export default function Home() {
       <div className="terminal-body p-4">
         <div id="terminal-output" className="h-[calc(100vh-150px)] overflow-y-auto mb-4">
           <AnimatePresence>
-            {output.map((line: any, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mb-2 whitespace-pre-wrap"
-              >
-                {line}
-              </motion.div>
-            ))}
+            {output.map((line, index) => {
+              const modifiedLine = line as ReactNode | MotionValue<number> | MotionValue<string>
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="mb-2 whitespace-pre-wrap"
+                >
+                  {modifiedLine}
+                </motion.div>
+              )
+            })}
           </AnimatePresence>
         </div>
         <form onSubmit={handleSubmit} className="flex items-center">
