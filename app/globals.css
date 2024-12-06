@@ -1,27 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+ 
+@layer base {
+  :root {
+    --background: 225 6% 13%;
+    --foreground: 0 0% 100%;
+    --card: 225 6% 18%;
+    --card-foreground: 0 0% 100%;
+    --popover: 225 6% 18%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 225 6% 23%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 225 6% 23%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 225 6% 23%;
+    --input: 225 6% 23%;
+    --ring: 199 89% 48%;
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('/fonts/CascadiaCode.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cascadia Code', monospace;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.terminal-window {
+  background-color: hsl(var(--background));
+  border: 1px solid hsl(var(--primary));
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 120, 215, 0.5);
 }
+
+.terminal-header {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 5px 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.terminal-body {
+  padding: 10px;
+}
+
+.cursor::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.command-prompt::before {
+  content: 'PS C:\\Users\\YourName> ';
+  color: hsl(var(--primary));
+}
+
+/* Add styles for project images */
+.terminal-body img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border: 1px solid hsl(var(--primary));
+}
+
